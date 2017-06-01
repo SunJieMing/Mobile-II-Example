@@ -21,21 +21,19 @@ class SignUp extends React.Component {
   }
 
   signUp() {
-    const promise = axios.post('https://mobile-server-ii.herokuapp.com/users', {
+    axios.post('https://mobile-server-ii.herokuapp.com/users', {
       email: this.state.email,
       password: this.state.password,
-    });
-    promise.then((response) => {
+    }).then((response) => {
       if (response.data.code === 11000) {
         return this.setState({
           error: 'Email already taken',
         });
       }
       AsyncStorage.setItem('token', response.data.token).then(() => {
-        this.props.navigate('Test');
+        this.props.navigate('Content');
       });
-    });
-    promise.catch((error) => {
+    }).catch((error) => {
       console.log(error);
     });
   }
